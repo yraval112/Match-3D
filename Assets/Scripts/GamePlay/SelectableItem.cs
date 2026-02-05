@@ -1,4 +1,6 @@
 using UnityEngine;
+using DG.Tweening;
+using System.Collections;
 
 public class SelectableItem : MonoBehaviour
 {
@@ -23,6 +25,24 @@ public class SelectableItem : MonoBehaviour
     public void Select()
     {
         if (!isClickable) return;
+
+        StartCoroutine(SelectAnimation());
+    }
+
+    private IEnumerator SelectAnimation()
+    {
+        // Scale up animation
+        transform.DOScale(1.1f, 0.1f).SetEase(Ease.OutBack);
+        yield return new WaitForSeconds(0.1f);
+
+        // Scale back
+        transform.DOScale(1f, 0.1f).SetEase(Ease.InBack);
+        yield return new WaitForSeconds(0.1f);
+
+        // Move to tray with fade out
+        transform.DOScale(0.5f, 0.3f);
+        //transform.DOMove(transform.position + Vector3.up * 2f, 0.3f).SetEase(Ease.InQuad);
+        yield return new WaitForSeconds(0.3f);
 
         parentSlot.RemoveTopItem();
         MatchManager.Instance.AddToTray(this);

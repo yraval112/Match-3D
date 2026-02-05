@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using DG.Tweening;
 
 public class MatchManager : MonoBehaviour
 {
@@ -24,7 +26,22 @@ public class MatchManager : MonoBehaviour
             return;
         }
 
-        emptySlot.SetItem(item);
+        // Animate item to tray position
+        StartCoroutine(AnimateItemToTray(item, emptySlot));
+    }
+
+    private IEnumerator AnimateItemToTray(SelectableItem item, TraySlot targetSlot)
+    {
+        // Move item to tray slot position
+        item.transform.DOMove(targetSlot.transform.position, 0.3f).SetEase(Ease.InQuad);
+
+        // Scale down during movement
+        item.transform.DOScale(0.8f, 0.3f);
+
+        yield return new WaitForSeconds(0.3f);
+
+        // Set item in tray
+        targetSlot.SetItem(item);
         trayItems.Add(item);
 
         CheckMatch();
@@ -46,6 +63,8 @@ public class MatchManager : MonoBehaviour
 
     void RemoveMatch(List<SelectableItem> matchedItems)
     {
+        CoinSystem.Instance.AddCoins(CoinSystem.Instance.coinsPerMatch);
+
         foreach (var item in matchedItems)
         {
             TraySlot slot = traySlots.Find(s => s.currentItem == item);
