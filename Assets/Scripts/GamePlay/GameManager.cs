@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public Action onGameOver;
+    public bool isGameOver = false;
     void Awake()
     {
         Instance = this;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        isGameOver = true;
         Debug.Log("GAME OVER!");
     }
 }

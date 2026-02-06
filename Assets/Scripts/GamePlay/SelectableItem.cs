@@ -54,5 +54,8 @@ public enum ObjectType
     Banana,
     Shoe,
     Toy,
-    Cake
+    Cake,
+    Drum,
+    Cherry,
+    Pumpkin
 }

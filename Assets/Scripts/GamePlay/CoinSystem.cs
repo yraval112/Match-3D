@@ -45,6 +45,7 @@ public class CoinSystem : MonoBehaviour
         {
             Instance = this;
             coinDataPath = Path.Combine(Application.persistentDataPath, COIN_FILE_NAME);
+            Debug.Log("Coin data path: " + coinDataPath);
             LoadCoinsFromStorage();
         }
         else
