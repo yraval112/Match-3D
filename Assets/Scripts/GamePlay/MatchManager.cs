@@ -22,7 +22,8 @@ public class MatchManager : MonoBehaviour
 
         if (emptySlot == null)
         {
-            GameManager.Instance.GameOver();
+            //    GameManager.Instance.GameOver();
+            GameManager.onGameOver?.Invoke();
             return;
         }
 

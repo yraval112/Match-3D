@@ -20,7 +20,7 @@ MonoBehaviour:
     slotSpacingY: 1.5
     gridZDistance: 10
     gridStartPosition: {x: 0, y: 0, z: 0}
-    levelTimeLimit: 10
+    levelTimeLimit: 1
   - levelNumber: 2
     gridRows: 3
     gridColumns: 4

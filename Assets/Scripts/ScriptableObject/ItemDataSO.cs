@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemDataSO : MonoBehaviour
+[CreateAssetMenu(fileName = "ItemData", menuName = "ScriptableObjects/ItemDataSO", order = 2)]
+public class ItemDataSO : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+}
+public class ItemData
+{
+    public ObjectType itemType;
+    public string itemName;
+    public int itemValue;
+}
+public enum ObjectTypeByLevel
+{
+    Red,
+    Blue,
+    Green,
+    Yellow,
+    Purple
 }

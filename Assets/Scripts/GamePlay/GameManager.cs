@@ -4,12 +4,20 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public Action onGameOver;
+    public static Action onGameOver;
     public bool isGameOver = false;
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+
+        }
         onGameOver += GameOver;
+    }
+    void OnDestroy()
+    {
+        onGameOver -= GameOver;
     }
 
     public void CheckWin()
@@ -29,5 +37,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         Debug.Log("GAME OVER!");
+
+
     }
 }

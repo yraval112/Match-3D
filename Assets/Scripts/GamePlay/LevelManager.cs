@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ public enum Difficulty { Easy, Hard }
 
 public class LevelManager : MonoBehaviour
 {
+    public static event Action<int> onLevelChanged;
     public static LevelManager Instance { get; private set; }
 
     public int levelNumber = 1;
@@ -26,6 +28,20 @@ public class LevelManager : MonoBehaviour
     public float levelTimeLimit = 60f;
 
     private int currentItemsPerSlot;
+
+    // Call this to change levels at runtime. Invokes `onLevelChanged`.
+    public void SetLevel(int newLevel)
+    {
+        if (newLevel == levelNumber) return;
+        levelNumber = newLevel;
+        LoadLevelData();
+        onLevelChanged?.Invoke(levelNumber);
+    }
+
+    public void NextLevel()
+    {
+        SetLevel(levelNumber + 1);
+    }
 
     void Awake()
     {
@@ -143,7 +159,7 @@ public class LevelManager : MonoBehaviour
 
     public void SpawnItemInSlot(ItemSlot slot)
     {
-        ObjectType randomType = (ObjectType)Random.Range(0, System.Enum.GetNames(typeof(ObjectType)).Length);
+        ObjectType randomType = (ObjectType)UnityEngine.Random.Range(0, System.Enum.GetNames(typeof(ObjectType)).Length);
         SelectableItem item = objectPool.SpawnFromPool(randomType);
 
         if (item != null)
